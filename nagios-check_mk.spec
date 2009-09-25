@@ -1,5 +1,5 @@
 %define name	nagios-check_mk
-%define version	1.0.34
+%define version	1.0.37
 %define release	%mkrel 1
 
 Name:		%{name}
