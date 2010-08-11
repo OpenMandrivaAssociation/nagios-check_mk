@@ -1,6 +1,6 @@
 %define name	nagios-check_mk
 %define version	1.1.6p1
-%define release	%mkrel 1
+%define release	%mkrel 2
 %define _requires_exceptions pear(default.php)
 
 Name:		%{name}
@@ -40,10 +40,16 @@ tar xf agents.tar.gz
 %install
 rm -rf %{buildroot}
 
-install -d -m 755 %{buildroot}%{_datadir}/nagios/plugins
-cat > %{buildroot}%{_datadir}/nagios/plugins/check_mk <<'EOF'
+install -d -m 755 %{buildroot}%{_bindir}
+cat > %{buildroot}%{_bindir}/check_mk <<'EOF'
 #!/bin/sh
 exec python %{_datadir}/check_mk/modules/check_mk.py "$@"
+EOF
+chmod +x %{buildroot}%{_bindir}/check_mk
+
+install -d -m 755 %{buildroot}%{_sysconfdir}/check_mk
+cat > %{buildroot}%{_sysconfdir}/check_mk/main.mk <<'EOF'
+all_hosts = [ "localhost" ]
 EOF
 
 install -d -m 755 %{buildroot}%{_datadir}/check_mk
@@ -60,42 +66,42 @@ cat > %{buildroot}%{_datadir}/check_mk/modules/defaults <<'EOF'
 # created during package creation
 
 check_mk_version            = '%{version}'
-default_config_dir          = '%{_datadir}/check_mk'
-check_mk_configdir          = '%{_datadir}/check_mk/conf.d'
+default_config_dir          = '%{_sysconfdir}/check_mk'
+check_mk_configdir          = '%{_sysconfdir}/check_mk/conf.d'
 checks_dir                  = '%{_datadir}/check_mk/checks'
 check_manpages_dir          = '%{_datadir}/check_mk/doc/checks'
 modules_dir                 = '%{_datadir}/check_mk/modules'
 agents_dir                  = '%{_datadir}/check_mk/agents'
-var_dir                     = '%{_datadir}/check_mk/var'
-lib_dir                     = '%{_datadir}/check_mk/lib'
-autochecksdir               = '%{_datadir}/check_mk/var/autochecks'
-precompiled_hostchecks_dir  = '%{_datadir}/check_mk/var/precompiled'
-counters_directory          = '%{_datadir}/check_mk/var/counters'
-tcp_cache_dir               = '%{_datadir}/check_mk/var/cache'
-logwatch_dir                = '%{_datadir}/check_mk/var/logwatch'
-nagios_objects_file         = '%{_datadir}/check_mk/nagios/etc/check_mk_objects.cfg'
-rrd_path                    = '%{_datadir}/check_mk/var/rrd'
+var_dir                     = '%{_localstatedir}/lib/check_mk'
+lib_dir                     = ''
+autochecksdir               = '%{_localstatedir}/lib/check_mk/autochecks'
+precompiled_hostchecks_dir  = '%{_localstatedir}/lib/check_mk/precompiled'
+counters_directory          = '%{_localstatedir}/lib/check_mk/counters'
+tcp_cache_dir               = '%{_localstatedir}/lib/check_mk/cache'
+logwatch_dir                = '%{_localstatedir}/lib/check_mk/logwatch'
+nagios_objects_file         = '%{_sysconfdir}/nagios/objects/check_mk_objects.cfg'
+rrd_path                    = '%{_localstatedir}/lib/check_mk/rrd'
 nagios_command_pipe_path    = '/var/log/nagios/rw/nagios.cmd'
 nagios_status_file          = '/var/log/nagios/status.dat'
-nagios_conf_dir             = '/etc/nagios'
+nagios_conf_dir             = '/etc/nagios/objects'
 nagios_user                 = 'nagios'
 nagios_url                  = '/nagios'
 nagios_cgi_url              = '/nagios/cgi-bin'
 logwatch_notes_url          = '/check_mk/logwatch.py?host=%s&file=%s'
 www_group                   = 'apache'
-nagios_config_file          = '%{_datadir}/check_mk/nagios/etc/nagios.cfg'
-nagios_startscript          = '/etc/init.d/nagios'
-nagios_binary               = '%{_datadir}/check_mk/nagios/bin/nagios'
-apache_config_dir           = '/etc/apache2/conf.d'
-htpasswd_file               = '%{_datadir}/check_mk/etc/htpasswd.users'
+nagios_config_file          = '%{_sysconfdir}/nagios/nagios.cfg'
+nagios_startscript          = '%{_initrddir}/nagios'
+nagios_binary               = '%{_sbindir}/nagios'
+apache_config_dir           = '%{_sysconfdir}/httpd/conf/webapps.d'
+htpasswd_file               = '%{_sysconfdir}/check_mk/htpasswd.users'
 nagios_auth_name            = 'Nagios Access'
 web_dir                     = '%{_datadir}/check_mk/web'
 checkmk_web_uri             = '/check_mk'
-livestatus_unix_socket      = '/var/log/nagios/rw/live'
-livebackendsdir             = '%{_datadir}/check_mk/livestatus'
+livestatus_unix_socket      = '/'
+livebackendsdir             = ''
 pnp_url                     = '/pnp4nagios/'
 pnp_templates_dir           = '%{_datadir}/check_mk/pnp-templates'
-doc_dir                     = '%{_datadir}/check_mk/doc'
+doc_dir                     = '%{_datadir}/doc/check_mk'
 EOF
 cp %{buildroot}%{_datadir}/check_mk/modules/defaults \
     %{buildroot}%{_datadir}/check_mk/web/htdocs/defaults.py
@@ -136,7 +142,8 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %doc %{_docdir}/%{name}
-%{_datadir}/nagios/plugins/check_mk
+%{_bindir}/check_mk
+%config(noreplace) %{_sysconfdir}/check_mk
 %{_datadir}/check_mk
 %{_localstatedir}/lib/check_mk
 
