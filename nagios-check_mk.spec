@@ -1,6 +1,6 @@
 %define name	nagios-check_mk
 %define version	1.1.6p1
-%define release	%mkrel 2
+%define release	%mkrel 3
 %define _requires_exceptions pear(default.php)
 
 Name:		%{name}
@@ -115,7 +115,7 @@ install -d -m 755 %{buildroot}%{_localstatedir}/lib/check_mk/logwatch
 install -d -m 755 %{buildroot}%{_localstatedir}/lib/check_mk/rrd
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}
-tar xf doc.tar.gz -C %{buildroot}%{_docdir}/%{name}
+tar xf doc.tar.gz -C %{buildroot}%{_docdir}/%{name} --exclude livestatus
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/xinetd.d
 install -m 644 xinetd.conf %{buildroot}%{_sysconfdir}/xinetd.d/check_mk_agent
