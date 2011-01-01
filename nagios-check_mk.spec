@@ -1,6 +1,6 @@
 %define name	nagios-check_mk
-%define version	1.1.6p1
-%define release	%mkrel 3
+%define version	1.1.8
+%define release	%mkrel 1
 %define _requires_exceptions pear(default.php)
 
 Name:		%{name}
