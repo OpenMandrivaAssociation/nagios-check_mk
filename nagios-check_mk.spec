@@ -1,5 +1,5 @@
 %define name	nagios-check_mk
-%define version	1.1.8
+%define version	1.1.10
 %define release	%mkrel 1
 %define _requires_exceptions pear(default.php)
 
@@ -126,7 +126,10 @@ install -m 755 check_mk_agent.linux %{buildroot}%{_bindir}/check_mk_agent
 install -d -m 755 %{buildroot}%{_datadir}/check_mk_agent
 install -d -m 755 %{buildroot}%{_datadir}/check_mk_agent/plugins
 install -d -m 755 %{buildroot}%{_datadir}/check_mk_agent/local
-install -m 644 mk_logwatch %{buildroot}%{_datadir}/check_mk_agent/plugins
+install -m 644 plugins/mk_logwatch %{buildroot}%{_datadir}/check_mk_agent/plugins
+install -m 644 plugins/j4p_performance %{buildroot}%{_datadir}/check_mk_agent/plugins
+install -m 644 plugins/mk_oracle %{buildroot}%{_datadir}/check_mk_agent/plugins
+install -m 644 plugins/sylo %{buildroot}%{_datadir}/check_mk_agent/plugins
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/check_mk_agent
 install -m 644 logwatch.cfg %{buildroot}%{_sysconfdir}/check_mk_agent
