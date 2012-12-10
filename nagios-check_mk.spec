@@ -157,3 +157,46 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/xinetd.d/check_mk_agent
 %config(noreplace) %{_sysconfdir}/check_mk_agent
 
+
+
+%changelog
+* Wed Apr 06 2011 Luis Daniel Lucio Quiroz <dlucio@mandriva.org> 1.1.10-1mdv2011.0
++ Revision: 650815
+- 1.1.10
+
+* Sat Jan 01 2011 Guillaume Rousse <guillomovitch@mandriva.org> 1.1.8-1mdv2011.0
++ Revision: 627149
+- update to new version 1.1.8
+
+* Tue Oct 19 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1.1.6p1-3mdv2011.0
++ Revision: 586772
+- don't ship livestatus files in documentation
+
+* Wed Aug 11 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1.1.6p1-2mdv2011.0
++ Revision: 569156
+- fix executable location and executable bit
+- fix some defaults
+
+* Sun Aug 08 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1.1.6p1-1mdv2011.0
++ Revision: 567779
+- new version
+
+* Sat Nov 07 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.0.39-1mdv2010.1
++ Revision: 462355
+- new version
+
+* Sun Sep 27 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.0.37-2mdv2010.0
++ Revision: 450272
+- fix dependencies
+
+* Sat Sep 26 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.0.37-1mdv2010.0
++ Revision: 449294
+- new version
+
+* Sat Jul 18 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.0.34-1mdv2010.0
++ Revision: 396955
+- import nagios-check_mk
+
+
+* Sat Jul 18 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.0.34-1mdv2010.0
+- first mdv package
