@@ -1,6 +1,6 @@
 Name:		nagios-check_mk
 Version:	1.1.10
-Release:	2
+Release:	3
 Summary:	A new general purpose Nagios-plugin for retrieving data
 Group:		Networking/Other
 License:	BSD
