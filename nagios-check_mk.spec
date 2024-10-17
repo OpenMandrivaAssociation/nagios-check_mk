@@ -4,7 +4,7 @@ Release:	3
 Summary:	A new general purpose Nagios-plugin for retrieving data
 Group:		Networking/Other
 License:	BSD
-URL:		http://mathias-kettner.de/check_mk
+URL:		https://mathias-kettner.de/check_mk
 Source:     http://mathias-kettner.de/download/check_mk-%{version}.tar.gz
 BuildArch:  noarch
 
